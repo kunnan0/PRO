@@ -1,0 +1,31 @@
+<!--pages/miniNote/miniNote.wxml-->
+<view class="container">
+  <!-- 输入框 -->
+  <view class="main">
+    <van-cell-group>
+      <van-field value="{{ msg }}" placeholder="请输入内容" border="{{ false }}" autosize type="textarea"
+        bind:change="inputText" />
+    </van-cell-group>
+  </view>
+  <!-- 上传图片功能，缺一个地址，还没完成，之后补充 -->
+  <view class="pic">
+    <van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" />
+  </view>
+
+  <!-- 设置 -->
+  <view class="setting">
+    <!-- 心情 -->
+    <view class="mind">
+      <van-rate value="{{ value }}" icon="like" void-icon="like-o" bind:change="rateMind" />
+    </view>
+    <view class="setPrivacy">
+      <van-radio-group value="{{ radio }}" bind:change="changePri">
+        <van-radio name="1">公开分享</van-radio>
+        <van-radio name="2">尽自己可见 2</van-radio>
+      </van-radio-group>
+    </view>
+  </view>
+  <!-- 发布按钮 -->
+  <van-button class="btn" type="primary" block color="linear-gradient(to right, #4bb0ff, #6149D9)">发布</van-button>
+
+</view>

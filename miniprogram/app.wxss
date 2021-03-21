@@ -1,0 +1,10 @@
+/**app.wxss**/
+page {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica,
+    Segoe UI, Arial, Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+
+}

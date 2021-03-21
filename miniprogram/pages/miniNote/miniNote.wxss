@@ -1,0 +1,26 @@
+/* pages/miniNote/miniNote.wxss */
+.container {
+  height: 100%;
+  width: 100%;
+}
+
+.main {
+  height: 500rpx;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 50rpx;
+  border: darkgrey 2rpx solid;
+  background-color: rgb(241, 241, 241);
+  overflow: scroll;
+}
+
+.setting {
+  height: 400rpx;
+  border: darkorange 2rpx solid;
+  margin: 40rpx 0;
+}
+
+.btn {
+  width: 80%;
+  margin: auto;
+}

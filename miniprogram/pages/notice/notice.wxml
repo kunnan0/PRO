@@ -1,0 +1,25 @@
+<!--pages/notice/notice.wxml-->
+<view class="container">
+  <!-- 复选框x滑块=每条tip -->
+  <van-checkbox-group value="{{ result }}" bind:change="onChange" class="checkBox">
+    <view class="checkCell" wx:for="{{notice}}" wx:key="id">
+      <van-swipe-cell right-width="{{ 65 }}">
+        <van-checkbox name="{{item.id}}" shape="square" checked-color="#777" class="{{item.select_status?'deleteLine':''}}">
+          {{item.content}}
+        </van-checkbox>
+        <view slot="right" bind:tap="handleDelete" class="deleteBtn" data-tip="{{item}}">删除</view>
+      </van-swipe-cell>
+    </view>
+  </van-checkbox-group>
+
+  <van-button color="#999" icon="plus" type="primary" wx:if="{{!showIpt}}" bind:click="toggleBtn" />
+  <van-button color="#999" icon="minus" type="primary" wx:else bind:click="toggleBtn" />
+  <van-cell-group wx:if="{{showIpt}}">
+    <van-field value="{{ sms }}" center clearable placeholder="请输入内容" border="{{ true }}" use-button-slot
+      bind:input="handleInput">
+      <van-button slot="button" size="small" type="danger"  bind:click="handleAdd">
+        新建
+      </van-button>
+    </van-field>
+  </van-cell-group>
+</view>

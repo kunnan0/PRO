@@ -1,0 +1,12 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <van-grid clickable column-num="1" center="{{true}}" border="{{true}}" icon-size="40px" gutter="20px">
+    <van-grid-item 
+      icon="cloud://clound-5gtvltq351d31b48.636c-clound-5gtvltq351d31b48-1304986325/pageIcon/diary.png"
+      link-type="navigateTo" url="/pages/diaryGroup/diaryGroup" text="我的日志本" />
+    <van-grid-item icon="cloud://clound-5gtvltq351d31b48.636c-clound-5gtvltq351d31b48-1304986325/pageIcon/note.png"
+      link-type="navigateTo" url="/pages/noteGroup/noteGroup" text="我的随笔本" />
+    <van-grid-item icon="cloud://clound-5gtvltq351d31b48.636c-clound-5gtvltq351d31b48-1304986325/pageIcon/likes.png"
+      link-type="navigateTo" url="/pages/likes/likes" text="我的收藏" />
+  </van-grid>
+</view>

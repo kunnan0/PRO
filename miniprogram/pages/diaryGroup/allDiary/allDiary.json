@@ -1,0 +1,12 @@
+{
+  "usingComponents": {
+    "van-empty": "/@vant/weapp/dist/empty/index",
+    "van-icon": "/@vant/weapp/dist/icon/index",
+    "van-card": "/@vant/weapp/dist/card/index",
+    "van-cell": "/@vant/weapp/dist/cell/index",
+    "van-cell-group": "/@vant/weapp/dist/cell-group/index",
+    "van-dropdown-menu": "/@vant/weapp/dist/dropdown-menu/index",
+    "van-dropdown-item": "/@vant/weapp/dist/dropdown-item/index",
+    "van-nav-bar": "/@vant/weapp/dist/nav-bar/index"
+  }
+}

@@ -1,0 +1,10 @@
+/* pages/diary/diary.wxss */
+
+.content {
+  height: 650rpx;
+  width: 90%;
+  margin: 50rpx auto;
+  border: darkgrey 2rpx solid;
+  background-color: rgb(241, 241, 241);
+  overflow: scroll;
+}

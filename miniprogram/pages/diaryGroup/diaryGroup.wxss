@@ -1,0 +1,15 @@
+/* pages/diaryGroup/diaryGroup.wxss */
+
+.container {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(245, 244, 244);
+}
+
+.lib {
+  margin-top: 40rpx;
+}
+
+.empty {
+  margin-top: 40rpx;
+}

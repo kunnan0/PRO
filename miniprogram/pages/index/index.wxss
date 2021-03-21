@@ -1,0 +1,11 @@
+/* pages/index/index.wxss */
+.container {
+  height: 100%;
+  width: 100%;
+}
+
+.diary{
+  width: 360rpx;
+  height: 220rpx;
+
+}

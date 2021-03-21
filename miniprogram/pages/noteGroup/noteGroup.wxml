@@ -1,0 +1,40 @@
+<!--pages/noteGroup/noteGroup.wxml-->
+<view class="container">
+  <van-nav-bar safe-area-inset-top="{{false}}" border="{{true}}" left-text="返回" right-text="{{settingFlag?'取消':'管理'}}"
+    left-arrow bind:click-left="onClickLeft" bind:click-right="onClickRight" />
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{!noteGroup}}">
+    <van-grid clickable column-num="3" center="{{true}}" border="{{true}}" icon-size="40px" gutter="20px">
+      <van-grid-item icon="plus" text="新建" bind:click="handleAddGroup" />
+    </van-grid>
+    <van-empty description="暂无笔记本" />
+  </view>
+  <!-- 显示笔记本组 -->
+  <view class="lib" wx:elif="{{!settingFlag && noteGroup}}">
+    <van-grid clickable column-num="3" center="{{true}}" square="{{true}}" border="{{true}}" icon-size="40px"
+      gutter="20px">
+      <van-grid-item wx:for="{{noteGroup}}" wx:key="id"
+        icon="cloud://clound-5gtvltq351d31b48.636c-clound-5gtvltq351d31b48-1304986325/pageIcon/noteGroup.png"
+        link-type="navigateTo" url="/pages/noteGroup/noteGroup" text="{{item.name}}" />
+      <van-grid-item icon="plus" text="新建" bind:click="handleAddGroup" />
+      <!-- 新建时弹出的选项框 -->
+      <van-dialog use-slot title="新建日志本" show="{{ showIpt }}" show-cancel-button bind:close="onClose"
+        bind:confirm="onConfirm">
+        <van-cell-group>
+          <van-field value="{{ valueIpt }}" placeholder="请输入日志本名称" border="{{ false }}" bind:change="onChange" />
+        </van-cell-group>
+      </van-dialog>
+    </van-grid>
+  </view>
+
+  <!-- 点击 管理 按钮，进入管理模式 -->
+  <view class="setting lib" wx:else>
+    <van-grid clickable column-num="3" center="{{true}}" square="{{true}}" border="{{true}}" icon-size="40px"
+      gutter="20px">
+      <van-grid-item wx:for="{{noteGroup}}" wx:key="id" icon="cross" text="{{item.name}}" bind:click="handleDelete"
+        data-diaryid="{{item.id}}" />
+    </van-grid>
+    <!-- 确认删除 -->
+    <van-dialog id="van-dialog" show="{{showDelete}}" />
+  </view>
+</view>

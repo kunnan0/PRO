@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-grid": "/@vant/weapp/dist/grid/index",
+    "van-empty": "/@vant/weapp/dist/empty/index",
+    "van-nav-bar": "/@vant/weapp/dist/nav-bar/index",
+    "van-dialog": "/@vant/weapp/dist/dialog/index",
+    "van-field": "/@vant/weapp/dist/field/index",
+    "van-cell-group": "/@vant/weapp/dist/cell-group/index",
+    "van-grid-item": "/@vant/weapp/dist/grid-item/index"
+  }
+}

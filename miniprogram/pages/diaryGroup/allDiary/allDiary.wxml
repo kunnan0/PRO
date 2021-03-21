@@ -1,0 +1,42 @@
+<!--pages/diaryGroup/allDiary/allDiary.wxml-->
+<view class="container">
+  <!-- nav导航 -->
+  <van-nav-bar title="日志本n" left-text="返回" left-arrow safe-area-inset-top="{{false}}">
+    <van-icon name="setting-o" slot="right" />
+    <van-dropdown-menu slot="right">
+      <!-- <van-dropdown-item value="{{setting}}" bind:change="handleNavChange" options="{{ option }}" /> -->
+      <van-dropdown-item title="管理" id="item">
+        <van-cell title="新建" bind:click="handleNew">
+        </van-cell>
+        <van-cell title="{{deleteFlag==true?'取消':'删除'}}" bind:click="handleDelete">
+        </van-cell>
+      </van-dropdown-item>
+
+    </van-dropdown-menu>
+  </van-nav-bar>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{diaryList.length===0}}">
+    <van-empty description="这里空空如也" />
+  </view>
+  <!-- 显示日志本 -->
+  <view class="diary" wx:else>
+    <block wx:for="{{diaryList}}" wx:key="id">
+      <van-card desc="{{item.digest}}" title="{{item.title}}" center
+        thumb="cloud://clound-5gtvltq351d31b48.636c-clound-5gtvltq351d31b48-1304986325/pageIcon/diaryGroupIcon.png">
+        <view slot="footer">
+          <text>{{item.date}} </text>
+          <van-button size="mini" type="danger" wx:if="{{deleteFlag}}" bind:click="deleteBtn" data-itemid="{{item.id}}">
+            删除
+          </van-button>
+        </view>
+        <view slot="price">
+          <text>{{item.company}}</text>
+        </view>
+      </van-card>
+      <!-- <view wx:if="{{deleteFlag}}">
+        <van-button type="danger" block>删除</van-button>
+      </view> -->
+    </block>
+  </view>
+</view>
