@@ -1,7 +1,10 @@
 // notice查询所需字段
 module.exports = {
-  NOTICE: {
+  NOTICEFIELD: {
+    _id: true,
     notice: true,
     userid: true,
+    deadline: true,
+    // complete: true,
   }
 }

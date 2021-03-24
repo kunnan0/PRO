@@ -3,6 +3,8 @@ const cloud = require('wx-server-sdk')
 const TcbRouter = require('tcb-router')
 const response = require('./utils/response')
 const diaryService = require('./service/diaryService')
+const noticeService = require('./service/noticeService')
+const notesService = require('./service/notesService')
 
 cloud.init()
 
@@ -57,7 +59,57 @@ exports.main = async (event, context) => {
     await next();
   })
 
+  // 5.根据用户id获取备忘录组信息
+  app.router('getUserNotice', async (ctx, next) => {
+    const {
+      userid
+    } = event.data;
+    ctx.data = await noticeService.getUserNotice(userid);
+    console.log(userid, ctx.data);
+    ctx.body = await response.success(ctx);
+    await next();
+  })
+  // 6.新增备忘录组
+  app.router('addNoticeGroup', async (ctx, next) => {
+    const {
+      params
+    } = event.data;
+    ctx.data = await noticeService.addNoticeGroup(params);
+    console.log(params, ctx.data);
+    ctx.body = await response.success(ctx);
+    await next();
+  })
+  // 7.更新备忘录组中的数据
+  app.router('updateNotice', async (ctx, next) => {
+    const {
+      params
+    } = event.data;
+    ctx.data = await noticeService.updateNotice(params);
+    console.log(params, ctx.data);
+    ctx.body = await response.success(ctx);
+    await next();
+  })
+  // 8.删除备忘录组
+  app.router('removeNoticeGroup', async (ctx, next) => {
+    const {
+      _id
+    } = event.data;
+    ctx.data = await noticeService.removeNoticeGroup(_id);
+    console.log(_id, ctx.data);
+    ctx.body = await response.success(ctx);
+    await next();
+  })
 
+  // 9.根据用户id获取随笔本数据
+  app.router('getUserNotes', async (ctx, next) => {
+    const {
+      userid
+    } = event.data;
+    ctx.data = await notesService.getUserNotes(userid);
+    console.log(userid, ctx.data);
+    ctx.body = await response.success(ctx);
+    await next();
+  })
 
 
   //测试云函数是否正常可用
