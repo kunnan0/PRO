@@ -11,12 +11,25 @@ const {
 } = require('../fields/notes')
 
 // 根据用户id获取数据
-const getUserNotes = (userid) => {
-  return model.findByUserId(NOTES, NOTESFIELD, userid)
+const getUserNotes = (openid) => {
+  return model.findByUserId(NOTES, NOTESFIELD, openid)
 }
+
+// 新增随笔
+const addNewNotes = (params) => {
+  return model.add(NOTES, params)
+}
+
+// 根据随笔id删除随笔
+const removeNotes = (_id) => {
+  return model.remove(NOTES, _id)
+}
+
 
 
 module.exports = {
   getUserNotes,
-
+  addNewNotes,
+  removeNotes,
+  
 }

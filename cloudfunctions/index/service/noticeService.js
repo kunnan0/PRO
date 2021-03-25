@@ -11,8 +11,8 @@ const {
 } = require('../fields/notice')
 
 // 根据id获取全部备忘录组
-const getUserNotice = (userid) => {
-  return model.findByUserId(NOTICE, NOTICEFIELD, userid)
+const getUserNotice = (openid) => {
+  return model.findByUserId(NOTICE, NOTICEFIELD, openid)
 }
 
 // 新增备忘录组

@@ -2,8 +2,10 @@
   "usingComponents": {
     "van-swipe-cell": "/@vant/weapp/dist/swipe-cell/index",
     "van-checkbox": "/@vant/weapp/dist/checkbox/index",
+    "van-grid": "/@vant/weapp/dist/grid/index",
+    "van-grid-item": "/@vant/weapp/dist/grid-item/index",
     "van-field": "/@vant/weapp/dist/field/index",
     "van-checkbox-group": "/@vant/weapp/dist/checkbox-group/index"
   },
-  "navigationBarTitleText":"任务栏"
+  "navigationBarTitleText": "任务栏"
 }

@@ -6,7 +6,17 @@ const diaryService = require('./service/diaryService')
 const noticeService = require('./service/noticeService')
 const notesService = require('./service/notesService')
 
-cloud.init()
+// cloud.init()
+cloud.init({
+  env: 'clound-5gtvltq351d31b48'
+})
+// 获取用户openid
+const getOpenid = () => {
+  const {
+    OPENID
+  } = cloud.getWXContext()
+  return OPENID
+}
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -21,9 +31,9 @@ exports.main = async (event, context) => {
 
   // 1.根据userid获取日志本数据
   app.router('getUserDiaryAll', async (ctx, next) => {
-    const userid = event.data.userid; //获取前端传来的userid
-    // console.log(userid);
-    ctx.data = await diaryService.getUserDiaryAll(userid)
+    const openid = getOpenid()
+    console.log(openid);
+    ctx.data = await diaryService.getUserDiaryAll(openid)
     // console.log('data', ctx.data);
     ctx.body = await response.success(ctx);
     await next();
@@ -33,6 +43,7 @@ exports.main = async (event, context) => {
     const { //从前端传入整合的要加入的数据
       params
     } = event.data;
+    params.userid = getOpenid();
     ctx.data = await diaryService.addDiaryGroup(params);
     // console.log(params, ctx.data);
     ctx.body = await response.success(ctx);
@@ -43,6 +54,7 @@ exports.main = async (event, context) => {
     const { //从前端传入整合的要加入的数据
       params
     } = event.data;
+    params.userid = getOpenid();
     ctx.data = await diaryService.updateDiary(params);
     // console.log(params, ctx.data);
     ctx.body = await response.success(ctx);
@@ -61,11 +73,9 @@ exports.main = async (event, context) => {
 
   // 5.根据用户id获取备忘录组信息
   app.router('getUserNotice', async (ctx, next) => {
-    const {
-      userid
-    } = event.data;
-    ctx.data = await noticeService.getUserNotice(userid);
-    console.log(userid, ctx.data);
+    const openid = getOpenid();
+    ctx.data = await noticeService.getUserNotice(openid);
+    console.log(openid, ctx.data);
     ctx.body = await response.success(ctx);
     await next();
   })
@@ -74,6 +84,7 @@ exports.main = async (event, context) => {
     const {
       params
     } = event.data;
+    params.userid = getOpenid();
     ctx.data = await noticeService.addNoticeGroup(params);
     console.log(params, ctx.data);
     ctx.body = await response.success(ctx);
@@ -84,6 +95,7 @@ exports.main = async (event, context) => {
     const {
       params
     } = event.data;
+    params.openid = getOpenid();
     ctx.data = await noticeService.updateNotice(params);
     console.log(params, ctx.data);
     ctx.body = await response.success(ctx);
@@ -102,11 +114,30 @@ exports.main = async (event, context) => {
 
   // 9.根据用户id获取随笔本数据
   app.router('getUserNotes', async (ctx, next) => {
-    const {
-      userid
-    } = event.data;
+    const userid = getOpenid();
     ctx.data = await notesService.getUserNotes(userid);
     console.log(userid, ctx.data);
+    ctx.body = await response.success(ctx);
+    await next();
+  })
+  // 10.新增随笔
+  app.router('addNewNotes', async (ctx, next) => {
+    const {
+      params
+    } = event.data;
+    params.userid = getOpenid();
+    ctx.data = await notesService.addNewNotes(params);
+    console.log(params, ctx.data);
+    ctx.body = await response.success(ctx);
+    await next();
+  })
+  // 11.删除随笔
+  app.router('removeNotes', async (ctx, next) => {
+    const {
+      _id
+    } = event.data;
+    ctx.data = await notesService.removeNotes(_id);
+    console.log(_id, ctx.data);
     ctx.body = await response.success(ctx);
     await next();
   })
@@ -130,9 +161,6 @@ exports.main = async (event, context) => {
   //     data: ctx.data
   //   };
   // })
-
-
-
 
 
   return app.serve();

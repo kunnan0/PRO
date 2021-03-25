@@ -2,7 +2,10 @@
 App({
   onLaunch: function () {
     this.getUserInfo();
-
+    wx.cloud.init({
+      env: 'clound-5gtvltq351d31b48',
+      traceUser: true
+    })
     // this.globalData = {
     //   userInfo:null
     // }
@@ -19,7 +22,7 @@ App({
               this.globalData.userInfo = res.userInfo;
             }
           })
-        }else{
+        } else {
           // 若未授权，请求授权
 
 
@@ -28,6 +31,6 @@ App({
     })
   },
   globalData: {
-    userInfo:null
+    userInfo: null
   }
 })

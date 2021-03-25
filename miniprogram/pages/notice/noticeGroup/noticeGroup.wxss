@@ -1,0 +1,28 @@
+/* pages/notice/noticeGroup/noticeGroup.wxss */
+.container {
+  height: 100%;
+  width: 100%;
+  padding: 20rpx;
+  font-weight: bold;
+}
+
+.checkCell {
+  height: 100rpx;
+  width: 100%;
+  margin: 10rpx 0 0 10rpx;
+  /* border-bottom: tan 1px solid; */
+}
+
+/* 删除按钮 */
+.deleteBtn {
+  /* border: gray 1px solid; */
+  padding: 10 10rpx;
+  color: red
+}
+
+/* 删除线 */
+.deleteLine {
+  text-decoration: line-through;
+  font-weight: bolder;
+  /* font-size: larger; */
+}

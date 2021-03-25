@@ -4,6 +4,7 @@
     "pages/my/my",
     "pages/noteGroup/allNote/allNote",
     "pages/notice/notice",
+    "pages/notice/noticeGroup/noticeGroup",
     "pages/index/index",
     "pages/diaryGroup/allDiary/allDiary",
     "pages/likes/likes",
