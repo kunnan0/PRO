@@ -5,6 +5,6 @@ module.exports = {
     notice: true,
     userid: true,
     deadline: true,
-    // complete: true,
+    finish: true,
   }
 }

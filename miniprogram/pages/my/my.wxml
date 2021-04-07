@@ -2,28 +2,28 @@
 <view class="container">
 
   <view class='user-wrap'>
-    
-      <van-image round width="100" height="100" src="{{userInfo.avatarUrl}}" wx:if="{{userInfo}}"  />
-      <van-image round width="100" height="100"
+
+    <van-image round width="100" height="100" src="{{userInfo.avatarUrl}}" wx:if="{{userInfo}}" />
+    <van-image round width="100" height="100"
       src="cloud://clound-5gtvltq351d31b48.636c-clound-5gtvltq351d31b48-1304986325/pageIcon/loginUser.png" wx:else />
-    <button type='primary' class="username-wrap" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">
+    <button type='primary' class="username-wrap" bind:tap="onGetUserInfo">
       <text class="username">{{userInfo?userInfo.nickName:'点击登录'}}</text>
       <!-- <text>登录</text> -->
     </button>
-    
+
   </view>
 
   <van-cell-group>
     <view class="today">
-      <van-action-sheet show="{{ show1 }}" actions="{{ writeActions }}" description="请选择记录方式" bind:close="onCloseSheet" 
+      <van-action-sheet show="{{ show1 }}" actions="{{ writeActions }}" description="请选择记录方式" bind:close="onCloseSheet"
         bind:select="onSelectSheet" title="今日事今日记" />
       <van-cell title="今日记" value="今日的收获如何？" bind:click="clickToday" />
     </view>
 
     <van-cell title="今日事今日毕" value="摆脱拖延症！" border="{{ true }}" bind:click="clickNotice" />
-    <van-cell title="日志本" value="回顾我“逝去的青春”" border="{{ true }}" bind:click="clickDiary"/>
-    <van-action-sheet show="{{ show2 }}" actions="{{ diaryActions }}" bind:close="onCloseSheet" 
-        bind:select="onSelectSheet" title="选择日志组" />
+    <van-cell title="日志本" value="回顾我“逝去的青春”" border="{{ true }}" bind:click="clickDiary" />
+    <van-action-sheet show="{{ show2 }}" actions="{{ diaryActions }}" bind:close="onCloseSheet"
+      bind:select="onSelectSheet" title="选择日志组" />
   </van-cell-group>
 
 </view>

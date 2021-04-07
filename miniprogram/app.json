@@ -1,10 +1,10 @@
 {
   "pages": [
+    "pages/notice/notice",
+    "pages/notice/noticeGroup/noticeGroup",
     
     "pages/my/my",
     "pages/noteGroup/allNote/allNote",
-    "pages/notice/notice",
-    "pages/notice/noticeGroup/noticeGroup",
     "pages/index/index",
     "pages/diaryGroup/allDiary/allDiary",
     "pages/likes/likes",
@@ -12,17 +12,16 @@
     "pages/group/group",
     "pages/diary/diary",
     "pages/miniNote/miniNote",
-    
-    
+
+
     "pages/noteGroup/noteGroup"
   ],
   "tabBar": {
     "color": "#7f8389",
     "selectedColor": "#ff6200",
     "borderStyle": "black",
-    "list": [
-      {
-        "pagePath":"pages/index/index",
+    "list": [{
+        "pagePath": "pages/index/index",
         "text": "收藏",
         "iconPath": "source/icons/barIcon/darkNote.png",
         "selectedIconPath": "source/icons/barIcon/note.png"

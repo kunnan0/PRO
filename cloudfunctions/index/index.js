@@ -8,7 +8,8 @@ const notesService = require('./service/notesService')
 
 // cloud.init()
 cloud.init({
-  env: 'clound-5gtvltq351d31b48'
+  env: 'clound-5gtvltq351d31b48',
+  traceUser: true
 })
 // 获取用户openid
 const getOpenid = () => {

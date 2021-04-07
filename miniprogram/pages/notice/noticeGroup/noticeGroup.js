@@ -113,6 +113,25 @@ Page({
    */
   onLoad: function (options) {
 
+    const evetChannel = this.getOpenerEventChannel();
+    evetChannel.emit('sendData', {
+      data: {
+        title: 'plz give me data',
+        text: '1551'
+      }
+    })
+    evetChannel.on('noticeData', (res) => {
+      // console.log('rev', res);
+      res.data.forEach(item => {
+        if (item) {
+          this.setData({
+            notice: item.notice
+          })
+        }
+      })
+    })
+
+    console.log('notice', this.data.notice);
   },
 
   /**

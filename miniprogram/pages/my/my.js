@@ -37,13 +37,24 @@ Page({
     }
   },
   // 用户授权
-  onGetUserInfo(e) {
-    const userInfo = e.detail.userInfo;
-    this.setData({
-      userInfo
+  onGetUserInfo() {
+    // console.log(e);
+    // const userInfo = e.detail.userInfo;
+    wx.getUserProfile({
+      desc: '用于登录',
+      success: (res) => {
+        this.setData({
+          userInfo: res.userInfo
+        })
+        console.log(this.data.userInfo);
+        app.globalData.userInfo = this.data.userInfo
+      }
     })
-    // console.log(this.data.userInfo);
-    app.globalData.userInfo = userInfo
+    // this.setData({
+    //   userInfo
+    // })
+   
+    
   },
 
   // 上拉菜单开关
@@ -119,16 +130,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log('fke!');
     wx.getSetting({ //页面加载就获取userInfo
       success: (res) => {
         if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
+          wx.getUserProfile({
             success: (res) => {
               const userInfo = res.userInfo;
               this.setData({
                 userInfo
               })
-              console.log(this.data.userInfo);
+              console.log('oo', this.data.userInfo);
             },
           })
         }

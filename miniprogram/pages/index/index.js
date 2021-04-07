@@ -1,12 +1,13 @@
 // pages/index/index.js
+const app = getApp() //获取app.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    
-    
+
+
   },
 
   /**
@@ -14,7 +15,7 @@ Page({
    */
   onLoad: function (options) {
 
-   
+
   },
 
   /**
@@ -28,19 +29,32 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.getSetting({ //检查是否已经登录，未登录跳转到个人中心进行登录
-      success: (res) => {
-        if (!res.authSetting['scope.userInfo']) {
-          wx.showToast({
-            title: '请先登录',
-            icon: 'loading'
-          })
-          wx.switchTab({
-            url: '/pages/my/my',
-          })
-        }
-      }
-    })
+
+    if (!app.globalData.userInfo) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'loading'
+      })
+      wx.switchTab({
+        url: '/pages/my/my',
+      })
+    }
+
+
+
+    // wx.getSetting({ //检查是否已经登录，未登录跳转到个人中心进行登录
+    //   success: (res) => {
+    //     if (!res.authSetting['scope.userInfo']) {
+    //       wx.showToast({
+    //         title: '请先登录',
+    //         icon: 'loading'
+    //       })
+    //       wx.switchTab({
+    //         url: '/pages/my/my',
+    //       })
+    //     }
+    //   }
+    // })
   },
 
   /**

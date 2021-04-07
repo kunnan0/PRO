@@ -1,15 +1,18 @@
 <view class="container">
 
-  <view class="card">
+  <view class="card" wx:for="{{noticeGroup}}" wx:key="_id" bind:tap='handleClick' data-id="{{item._id}}">
     <view class="left">
-    
-    </view>
-  
-    <view class="right">
-      <view class="top">deadLine</view>
-      <view class="bottom"></view>
+      <!-- 完成情况 -->
+      <view class="circle">
+        <van-circle value="{{ (item.finish.done/item.finish.all)*100 }}" size="80" color="{{ gradientColor }}"
+          layer-color="#ccc" text="{{item.finish.done+'/'+item.finish.all}}" />
+      </view>
     </view>
 
+    <view class="right">
+      <view class="top">deadLine</view>
+      <view class="bottom"> {{item.deadline}} </view>
+    </view>
   </view>
 
 </view>
