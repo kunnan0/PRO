@@ -1,7 +1,7 @@
 <!--pages/diaryGroup/diaryGroup.wxml-->
 <view class="container">
-  <van-nav-bar safe-area-inset-top="{{false}}" border="{{true}}" left-text="返回" right-text="{{settingFlag?'取消':'管理'}}" left-arrow
-    bind:click-left="onClickLeft" bind:click-right="onClickRight" />
+  <van-nav-bar safe-area-inset-top="{{false}}" border="{{true}}" left-text="返回" right-text="{{settingFlag?'取消':'管理'}}"
+    left-arrow bind:click-left="onClickLeft" bind:click-right="onClickRight" />
   <!-- 空状态 -->
   <view class="empty" wx:if="{{!diaryGroup}}">
     <van-grid clickable column-num="3" center="{{true}}" border="{{true}}" icon-size="40px" gutter="20px">
@@ -15,7 +15,8 @@
       gutter="20px">
       <van-grid-item wx:for="{{diaryGroup}}" wx:key="id"
         icon="cloud://clound-5gtvltq351d31b48.636c-clound-5gtvltq351d31b48-1304986325/pageIcon/diaryGroupIcon.png"
-        link-type="navigateTo" url="/pages/diaryGroup/diaryGroup" text="{{item.name}}" />
+        link-type="navigateTo" url="/pages/diaryGroup/diaryGroup" text="{{item.groupName}}" bind:tap="handleClickDiary"
+        data-id="{{item._id}}" />
       <van-grid-item icon="plus" text="新建" bind:click="handleAddGroup" />
       <!-- 新建时弹出的选项框 -->
       <van-dialog use-slot title="新建日志本" show="{{ showIpt }}" show-cancel-button bind:close="onClose"

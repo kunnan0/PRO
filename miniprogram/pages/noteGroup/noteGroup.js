@@ -9,37 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    noteGroup: [{ //日志本组数据
-        id: '1',
-        name: '日志本1',
-        list: [] //其中存储的日志本
-      },
-      {
-        id: '2',
-        name: '日志本2',
-        list: []
-      },
-      {
-        id: '3',
-        name: '日志本3',
-        list: []
-      },
-      {
-        id: '4',
-        name: '日志本4',
-        list: []
-      },
-      {
-        id: '5',
-        name: '日志本5',
-        list: []
-      },
-      // {
-      //   id: '6',
-      //   name: '日志本6',
-      //   list: []
-      // },
-    ],
+    noteGroup: [],
     showIpt: false, //显示新建时弹出的提示框
     valueIpt: "", //新建时提示框内输入的内容
     settingFlag: false, //是否点击了管理按钮

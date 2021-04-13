@@ -3,11 +3,11 @@
   <van-nav-bar safe-area-inset-top="{{false}}" border="{{true}}" left-text="返回" right-text="{{settingFlag?'取消':'管理'}}"
     left-arrow bind:click-left="onClickLeft" bind:click-right="onClickRight" />
   <!-- 空状态 -->
-  <view class="empty" wx:if="{{!noteGroup}}">
+  <view class="empty" wx:if="{{noteGroup.length==0}}">
     <van-grid clickable column-num="3" center="{{true}}" border="{{true}}" icon-size="40px" gutter="20px">
       <van-grid-item icon="plus" text="新建" bind:click="handleAddGroup" />
     </van-grid>
-    <van-empty description="暂无笔记本" />
+    <van-empty description="暂无笔记" />
   </view>
   <!-- 显示笔记本组 -->
   <view class="lib" wx:elif="{{!settingFlag && noteGroup}}">

@@ -3,10 +3,10 @@
  * @param {Array} arr 目标对象数组 
  * @param {String} id 要查找对象的id
  */
-function findObj(arr, id) {
+function findObj(arr, id,name) {
   let idx=-1
   arr.forEach((item, i) => {
-    if (item.id == id) {
+    if (item[name] == id) {
       idx=i
     }
   })

@@ -16,6 +16,7 @@ const getOpenid = () => {
   const {
     OPENID
   } = cloud.getWXContext()
+  console.log(OPENID);
   return OPENID
 }
 
@@ -42,11 +43,11 @@ exports.main = async (event, context) => {
   // 2.新建日志本
   app.router('addDiaryGroup', async (ctx, next) => {
     const { //从前端传入整合的要加入的数据
-      params
+      data
     } = event.data;
-    params.userid = getOpenid();
-    ctx.data = await diaryService.addDiaryGroup(params);
-    // console.log(params, ctx.data);
+    data.userid = getOpenid();
+    ctx.data = await diaryService.addDiaryGroup(data);
+    // console.log(data, ctx.data);
     ctx.body = await response.success(ctx);
     await next();
   })
@@ -83,22 +84,23 @@ exports.main = async (event, context) => {
   // 6.新增备忘录组
   app.router('addNoticeGroup', async (ctx, next) => {
     const {
-      params
+      newGroup
     } = event.data;
-    params.userid = getOpenid();
-    ctx.data = await noticeService.addNoticeGroup(params);
-    console.log(params, ctx.data);
+    console.log('data', newGroup, event);
+    newGroup.userid = getOpenid();
+    ctx.data = await noticeService.addNoticeGroup(newGroup);
+    console.log(newGroup, ctx.data);
     ctx.body = await response.success(ctx);
     await next();
   })
   // 7.更新备忘录组中的数据
   app.router('updateNotice', async (ctx, next) => {
     const {
-      params
+      groupData
     } = event.data;
-    params.openid = getOpenid();
-    ctx.data = await noticeService.updateNotice(params);
-    console.log(params, ctx.data);
+    groupData.openid = getOpenid();
+    ctx.data = await noticeService.updateNotice(groupData);
+    console.log(groupData, ctx.data);
     ctx.body = await response.success(ctx);
     await next();
   })

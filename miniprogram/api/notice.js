@@ -22,6 +22,7 @@ class Notice extends CloudRequest {
       url: 'addNoticeGroup',
       data: {
         newGroup
+
       },
       success: res => {
         cb(res);
@@ -35,6 +36,7 @@ class Notice extends CloudRequest {
       data: {
         groupData
       },
+      //openid: groupData[0].userid,
       success: res => {
         cb(res);
       }

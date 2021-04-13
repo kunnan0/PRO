@@ -12,11 +12,61 @@ Page({
    */
   data: {
     noticeGroup: [], //备忘录组数据
-    gradientColor: {
+    userid: '', //用户id
+    gradientColor: { //渐变色
       '0%': '#52B9F0',
       '100%': '#07c160',
     },
+    showDialog: false, //新建-弹窗显示
+    // 时间参数
+
+    showCalendar: false,
+    maxDate: new Date(2120, 1, 1).getTime(),
+    minDate: new Date().getTime(),
+
+
+
   },
+
+  // 设定时间事件
+  onDisplay() { //开启选框
+    this.setData({
+      showCalendar: true
+    });
+  },
+  onCloseDate() { //关闭选框
+    this.setData({
+      showCalendar: false
+    });
+  },
+  formatDate(date) { //选中的时间结果
+    date = new Date(date);
+
+    return `${date.getFullYear()}-${date.getMonth() + 1<10?'0'+(date.getMonth() + 1):date.getMonth() + 1}-${date.getDate()<10?'0'+date.getDate():date.getDate()}`;
+    // return date;
+  },
+  onConfirmDate(event) { //确认选择
+    const newNotice = {
+      notice: [],
+      deadline: this.formatDate(event.detail),
+      userid: this.data.userid,
+      finish: {
+        all: 0,
+        done: 0
+      }
+    }
+    console.log('new',newNotice);
+    const {
+      noticeGroup
+    } = this.data
+    noticeGroup.push(newNotice);
+    this.setData({
+      showCalendar: false,
+      noticeGroup,
+    });
+    this._update(newNotice);
+  },
+
   // 根据id查找对应数据组
   findById(id) {
     const {
@@ -30,6 +80,31 @@ Page({
       return false;
     })
     return data;
+  },
+
+  // 新建
+  handleAdd() {
+    // console.log('get');
+    this.setData({
+      showCalendar: true
+    })
+  },
+  // 新建-弹窗-取消
+  onCloseDialog() {
+    this.setData({
+      showDialog: false
+    })
+  },
+  // 新建-弹窗-确认
+  onConfirmDialog() {
+
+  },
+
+  //更新后端数据
+  _update(data) {
+    notice.addNoticeGroup(data, res => {
+      console.log(res);
+    })
   },
 
   // 获取后端数据
@@ -50,8 +125,9 @@ Page({
       })
       this.setData({
         noticeGroup: ret,
+        userid: ret[0].userid
       })
-      console.log(this.data.noticeGroup);
+      console.log(this.data.noticeGroup, this.data.userid);
     })
   },
   // 点击备忘录组跳转事件

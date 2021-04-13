@@ -1,4 +1,8 @@
 // pages/miniNote/miniNote.js
+import Note from '../../api/note'
+
+const noteService = new Note();
+
 Page({
 
   /**

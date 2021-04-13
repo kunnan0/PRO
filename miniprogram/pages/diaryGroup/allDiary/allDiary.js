@@ -1,5 +1,6 @@
 // pages/diaryGroup/allDiary/allDiary.js
 import idCreator from '../../../utils/idCreator'
+const app = getApp();
 Page({
 
   /**
@@ -46,13 +47,14 @@ Page({
         value: 1
       },
     ],
+    groupData: [], //整组数据
   },
   // 导航栏 管理按钮
   onClickSetting() {
 
   },
   // 导航栏 下拉菜单
-  handleNew() {//新建，转到新建
+  handleNew() { //新建，转到新建
     wx.navigateTo({
       url: '/pages/diary/diary',
     })
@@ -70,10 +72,10 @@ Page({
   },
   // 删除辅助方法，找到该元素
   findObj(arr, id) {
-    let idx=-1
+    let idx = -1
     arr.forEach((item, i) => {
       if (item.id == id) {
-        idx=i
+        idx = i
       }
     })
     return idx;
@@ -87,8 +89,8 @@ Page({
       diaryList
     } = this.data;
     // console.log(itemid, this.findObj(diaryList, itemid));
-    const index=this.findObj(diaryList,itemid);
-    if(index!=-1){
+    const index = this.findObj(diaryList, itemid);
+    if (index != -1) {
       diaryList.splice(index, 1);
     }
     this.setData({
@@ -102,7 +104,36 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const {
+      diaryData,
+      diaryGroup
+    } = app.globalData;
+    console.log(app.globalData);
+    this.setData({
+      diaryList: diaryData,
+      groupData: diaryGroup,
+    })
 
+
+    // const evetChannel = this.getOpenerEventChannel();
+    // console.log('123', this.getOpenerEventChannel());
+    // evetChannel.emit('sendDiary', {
+    //   data: {
+    //     title: 'plz give me data',
+    //     text: '1551'
+    //   }
+    // })
+    // evetChannel.on('diaryData', (res) => {
+    //   // console.log('rev', res);
+    //   res.data.forEach(item => {
+    //     if (item) {
+    //       this.setData({
+    //         diaryList: item.list,
+    //         groupData: item,
+    //       })
+    //     }
+    //   })
+    // })
   },
 
   /**

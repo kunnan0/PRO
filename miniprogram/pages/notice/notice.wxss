@@ -42,3 +42,12 @@
   line-height: 90rpx;
   /* flex: 1; */
 }
+
+.plus {
+  box-sizing: border-box;
+  padding: 0 200rpx;
+}
+
+.dialog .cal {
+  position: absolute;
+}

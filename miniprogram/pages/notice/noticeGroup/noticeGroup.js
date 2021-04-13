@@ -1,4 +1,8 @@
 // pages/notice/noticeGroup/noticeGroup.js
+import Notice from '../../../api/notice'
+
+const app = getApp();
+const noticeRouter = new Notice();
 Page({
 
   /**
@@ -30,6 +34,7 @@ Page({
         select_status: false
       },
     ],
+    allGroup: {}, //获取的整组数据，用于更新/删除
   },
   // 按钮点击事件切换输入框显示
   toggleBtn() {
@@ -49,7 +54,8 @@ Page({
   handleAdd(e) {
     const {
       sms,
-      notice
+      notice,
+      allGroup
     } = this.data;
     const id = (notice.length + 1).toString();
     const newTip = {
@@ -58,10 +64,17 @@ Page({
       select_status: false
     };
     notice.push(newTip);
+    allGroup.notice = notice;
+    allGroup.finish.all++;
     this.setData({
       notice, //更新notice，数据驱动视图更新
-      sms: "" //清空输入框
+      sms: "", //清空输入框
+      allGroup,
     })
+    noticeRouter.updateNotice(allGroup, res => {
+      console.log('updateNotice', res);
+    })
+
   },
   // 删除tip
   handleDelete(e) {
@@ -69,27 +82,47 @@ Page({
       tip
     } = e.currentTarget.dataset;
     const {
-      notice
+      notice,
+      allGroup,
     } = this.data;
     notice.splice(notice.indexOf(tip), 1)
+    if (notice == undefined) {
+      noticec = []
+    }
+    allGroup.notice = notice;
+    allGroup.finish.all--;
     this.setData({
-      notice
+      notice,
+      allGroup,
+    })
+    noticeRouter.updateNotice(allGroup, res => {
+      console.log('deleteNotice', res);
     })
   },
   // 复选框选中事件
   onChange(e) {
     const result = e.detail
+
     const {
-      notice
+      notice,
+      allGroup
     } = this.data;
+    let done = allGroup.finish.done;
     if (result && result.length != 0) {
       result.map((item, i) => {
         notice.forEach((obj) => {
           if (obj.id == item) {
-            obj.select_status = true;
-          } else {
-            obj.select_status = false;
-          }
+            obj.select_status = !obj.select_status;
+            if (obj.select_status == true) {
+              done--;
+              obj.select_status = false
+            } else {
+              done++;
+              obj.select_status = true
+            }
+          } // else {
+          //   obj.select_status = false;
+          // }
         })
       })
     } else {
@@ -97,9 +130,15 @@ Page({
         item.select_status = false;
       })
     }
+    allGroup.notice = notice;
+    allGroup.finish.done = done;
     this.setData({
       result,
-      notice
+      notice,
+      allGroup
+    })
+    noticeRouter.updateNotice(allGroup, res => {
+      console.log('selectUpdate', res);
     })
 
   },
@@ -112,7 +151,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    //从noticeGroup拿到数据
     const evetChannel = this.getOpenerEventChannel();
     evetChannel.emit('sendData', {
       data: {
@@ -125,7 +164,8 @@ Page({
       res.data.forEach(item => {
         if (item) {
           this.setData({
-            notice: item.notice
+            notice: item.notice,
+            allGroup: item,
           })
         }
       })

@@ -3,6 +3,12 @@ import Dialog from '../../@vant/weapp/dist/dialog/dialog';
 import {
   genNonDuplicateID
 } from '../../utils/idCreator';
+import Diary from '../../api/diary'
+const diaryService = new Diary();
+const app = getApp()
+import {
+  findObj
+} from '../../utils/idFinder'
 
 Page({
 
@@ -10,41 +16,42 @@ Page({
    * 页面的初始数据
    */
   data: {
-    diaryGroup: [{ //日志本组数据
-        id: '1',
-        name: '日志本1',
-        list: [] //其中存储的日志本
-      },
-      {
-        id: '2',
-        name: '日志本2',
-        list: []
-      },
-      {
-        id: '3',
-        name: '日志本3',
-        list: []
-      },
-      {
-        id: '4',
-        name: '日志本4',
-        list: []
-      },
-      {
-        id: '5',
-        name: '日志本5',
-        list: []
-      },
-      // {
-      //   id: '6',
-      //   name: '日志本6',
-      //   list: []
-      // },
-    ],
+    // diaryGroup: [{ //日志本组数据
+    //     id: '1',
+    //     name: '日志本1',
+    //     list: [] //其中存储的日志本
+    //   },
+    //   {
+    //     id: '2',
+    //     name: '日志本2',
+    //     list: []
+    //   },
+    //   {
+    //     id: '3',
+    //     name: '日志本3',
+    //     list: []
+    //   },
+    //   {
+    //     id: '4',
+    //     name: '日志本4',
+    //     list: []
+    //   },
+    //   {
+    //     id: '5',
+    //     name: '日志本5',
+    //     list: []
+    //   },
+    //   // {
+    //   //   id: '6',
+    //   //   name: '日志本6',
+    //   //   list: []
+    //   // },
+    // ],
     showIpt: false, //显示新建时弹出的提示框
     valueIpt: "", //新建时提示框内输入的内容
     settingFlag: false, //是否点击了管理按钮
     showDelete: false, //删除时弹窗
+    diaryGroup: [] //日志本组数据
   },
 
 
@@ -147,13 +154,55 @@ Page({
     })
   },
 
-
+  // 点击进入日志本
+  handleClickDiary(e) {
+    const {
+      id
+    } = e.currentTarget.dataset;
+    const {
+      diaryGroup
+    } = this.data;
+    const idx = findObj(diaryGroup, id, '_id')
+    const data = diaryGroup[idx];
+    console.log('datago', data, idx);
+    app.globalData.diaryData = data;
+    app.globalData.diaryGroup = diaryGroup;
+    // wx.navigateTo({
+    //   url: `/pages/diaryGroup/allDiary/allDiary`,
+    //   // events: {
+    //   //   sendDiary: (data) => {
+    //   //     console.log('re', data);
+    //   //   }
+    //   },
+    //   // success: (res) => {
+    //   //   // res.eventChannel.emit('diaryData', {
+    //   //   //   data: data
+    //   //   // })
+    //   // }
+    // })
+    wx.navigateTo({
+      url: '/pages/diaryGroup/allDiary/allDiary',
+    })
+  },
 
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let {
+      diaryGroup
+    } = this.data
+    diaryService.getUserDiaryAll(res => {
+      let ret = res.result
+      // console.log(ret.data.data0);
+      diaryGroup = ret.data.data
+      console.log('diary', diaryGroup);
+      this.setData({
+        diaryGroup
+      })
+    })
+
 
   },
 

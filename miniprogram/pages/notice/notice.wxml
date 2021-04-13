@@ -4,15 +4,31 @@
     <view class="left">
       <!-- 完成情况 -->
       <view class="circle">
-        <van-circle value="{{ (item.finish.done/item.finish.all)*100 }}" size="80" color="{{ gradientColor }}"
-          layer-color="#ccc" text="{{item.finish.done+'/'+item.finish.all}}" />
+        <van-circle value="{{ item.finish.all==0?0:(item.finish.done/item.finish.all)*100 }}" size="80" color="{{ gradientColor }}"
+          layer-color="#ccc" text="{{item.finish.all==0?0:item.finish.done+'/'+item.finish.all}}" />
       </view>
     </view>
 
     <view class="right">
       <view class="top">deadLine</view>
       <view class="bottom"> {{item.deadline}} </view>
+      <view class="delete">
+
+      </view>
     </view>
+  </view>
+
+  <view class="card plus" bind:tap="handleAdd">
+    <van-icon name="plus" size="5em" color="#ccc" />
+  </view>
+  <view class="dialog">
+    <!-- <van-dialog use-slot title="添加新备忘录组" show="{{ showDialog }}" show-cancel-button bind:close="onCloseDialog"
+      bind:confirm="onConfirmDialog">
+      <van-cell title="记录日期"  bind:click="onDisplay" /> -->
+      <van-calendar show="{{ showCalendar }}" bind:close="onCloseDate" bind:confirm="onConfirmDate"
+        show-confirm="{{ false }}" min-date="{{minDate}}" max-date="{{maxDate}}" default-date="{{minDate}}"
+        color="#52b9f0" class="cal"/>
+    <!-- </van-dialog> -->
   </view>
 
 </view>
