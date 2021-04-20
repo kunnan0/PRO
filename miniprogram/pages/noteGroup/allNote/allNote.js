@@ -5,14 +5,27 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    noteData: null,
   },
+
+
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const eventChannel = this.getOpenerEventChannel()
+    eventChannel.emit('sendNoteData', {
+      data: 'plz give me data'
+    })
 
+    eventChannel.on('accNoteData', res => {
+      console.log('res recept', res);
+      const noteData = res.noteData;
+      this.setData({
+        noteData
+      })
+    })
   },
 
   /**

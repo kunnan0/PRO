@@ -1,2 +1,16 @@
 <!--pages/noteGroup/allNote/allNote.wxml-->
-<text>pages/noteGroup/allNote/allNote.wxml</text>
+<view class="main">
+
+  <view class="date">
+    {{noteData.date}}
+  </view>
+
+  <view class="content">
+    <text>{{noteData.content}}</text>
+  </view>
+
+  <view class="mind">
+    <van-icon name="like" color="yellow" wx:for="{{noteData.mind - 0}}" />
+  </view>
+
+</view>

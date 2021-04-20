@@ -6,6 +6,7 @@
     "van-uploader": "/@vant/weapp/dist/uploader/index",
     "van-rate": "/@vant/weapp/dist/rate/index",
     "van-field": "/@vant/weapp/dist/field/index",
-    "van-radio-group": "/@vant/weapp/dist/radio-group/index"
+    "van-radio-group": "/@vant/weapp/dist/radio-group/index",
+    "van-calendar": "/@vant/weapp/dist/calendar/index"
   }
 }

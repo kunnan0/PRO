@@ -14,12 +14,13 @@ const db = cloud.database(); //获取数据库对象
  * @param {obj} fields 要查询的字段
  * @param {string} id 查找依据的用户id
  */
-const findByUserId = (model, fields = {}, userid) => {
+const findByUserId = (model, fields = {}, userid, orderBy = '_id',order='desc') => {
   try {
     return db.collection(model)
       .where({
         userid
       })
+      .orderBy(orderBy, order)
       .field(fields)
       .get()
   } catch (error) {

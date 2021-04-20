@@ -3,19 +3,19 @@
   <van-nav-bar safe-area-inset-top="{{false}}" border="{{true}}" left-text="返回" right-text="{{settingFlag?'取消':'管理'}}"
     left-arrow bind:click-left="onClickLeft" bind:click-right="onClickRight" />
   <!-- 空状态 -->
-  <view class="empty" wx:if="{{!diaryGroup}}">
+  <view class="empty" wx:if="{{diaryGroup.length==0}}">
     <van-grid clickable column-num="3" center="{{true}}" border="{{true}}" icon-size="40px" gutter="20px">
       <van-grid-item icon="plus" text="新建" bind:click="handleAddGroup" />
     </van-grid>
     <van-empty description="暂无笔记本" />
   </view>
   <!-- 显示笔记本组 -->
-  <view class="lib" wx:elif="{{!settingFlag && diaryGroup}}">
+  <view class="lib" wx:elif="{{!settingFlag && diaryGroup.length!=0}}">
     <van-grid clickable column-num="3" center="{{true}}" square="{{true}}" border="{{true}}" icon-size="40px"
       gutter="20px">
-      <van-grid-item wx:for="{{diaryGroup}}" wx:key="id"
+      <van-grid-item wx:for="{{diaryGroup}}" wx:key="_id"
         icon="cloud://clound-5gtvltq351d31b48.636c-clound-5gtvltq351d31b48-1304986325/pageIcon/diaryGroupIcon.png"
-        link-type="navigateTo" url="/pages/diaryGroup/diaryGroup" text="{{item.groupName}}" bind:tap="handleClickDiary"
+        link-type="navigateTo"  text="{{item.groupName}}" bind:tap="handleClickDiary"
         data-id="{{item._id}}" />
       <van-grid-item icon="plus" text="新建" bind:click="handleAddGroup" />
       <!-- 新建时弹出的选项框 -->
@@ -32,8 +32,8 @@
   <view class="setting lib" wx:else>
     <van-grid clickable column-num="3" center="{{true}}" square="{{true}}" border="{{true}}" icon-size="40px"
       gutter="20px">
-      <van-grid-item wx:for="{{diaryGroup}}" wx:key="id" icon="cross" text="{{item.name}}" bind:click="handleDelete"
-        data-diaryid="{{item.id}}" />
+      <van-grid-item wx:for="{{diaryGroup}}" wx:key="id" icon="cross" text="{{item.groupName}}" bind:click="handleDelete"
+        data-diaryid="{{item._id}}" />
     </van-grid>
     <!-- 确认删除 -->
     <van-dialog id="van-dialog" show="{{showDelete}}" />

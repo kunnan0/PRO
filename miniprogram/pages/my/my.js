@@ -6,9 +6,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: null, //用户信息
+    userInfo: {}, //用户信息
     show1: false, //下拉框是否可见
     show2: false, //下拉框是否可见
+    hasUserInfo: false, //记录是否已经登录
+    canIUseProfile: false, //登录接口兼容性判断标识
     writeActions: [{
         id: "1",
         name: "随笔记"
@@ -37,25 +39,47 @@ Page({
     }
   },
   // 用户授权
-  onGetUserInfo() {
-    // console.log(e);
-    // const userInfo = e.detail.userInfo;
+  getUserProfile() {
+    console.log('getprofile');
     wx.getUserProfile({
-      desc: '用于登录',
+      desc: '获取登录信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
         this.setData({
-          userInfo: res.userInfo
+          userInfo: res.userInfo,
+          hasUserInfo: true
         })
-        console.log(this.data.userInfo);
-        app.globalData.userInfo = this.data.userInfo
+        app.globalData.userInfo = this.data.userInfo;
       }
     })
-    // this.setData({
-    //   userInfo
-    // })
-   
-    
   },
+  // 兼容性，解决部分版本不支持新接口问题
+  getUserInfo(e) {
+    console.log('getuserinfo', e);
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
+    })
+    app.globalData.userInfo = this.data.userInfo
+  },
+  // onGetUserInfo() {
+  //   // console.log(e);
+  //   // const userInfo = e.detail.userInfo;
+  //   wx.getUserProfile({
+  //     desc: '用于登录',
+  //     success: (res) => {
+  //       this.setData({
+  //         userInfo: res.userInfo
+  //       })
+  //       console.log(this.data.userInfo);
+  //       app.globalData.userInfo = this.data.userInfo
+  //     }
+  //   })
+  //   // this.setData({
+  //   //   userInfo
+  //   // })
+
+
+  // },
 
   // 上拉菜单开关
   onCloseSheet() {
@@ -130,22 +154,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log('fke!');
-    wx.getSetting({ //页面加载就获取userInfo
-      success: (res) => {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserProfile({
-            success: (res) => {
-              const userInfo = res.userInfo;
-              this.setData({
-                userInfo
-              })
-              console.log('oo', this.data.userInfo);
-            },
-          })
-        }
-      },
-    })
+    if (wx.getUserProfile) { //在加载时判断是否可用
+      this.setData({
+        canIUseProfile: true
+      })
+      console.log('cani?', this.data.canIUseProfile);
+      // this.getUserProfile()
+    } else {
+      // this.getUserInfo()
+    }
+    // console.log('fke!');
+    // wx.getSetting({ //页面加载就获取userInfo
+    //   success: (res) => {
+    //     if (res.authSetting['scope.userInfo']) {
+    //       wx.getUserProfile({
+    //         success: (res) => {
+    //           const userInfo = res.userInfo;
+    //           this.setData({
+    //             userInfo
+    //           })
+    //           console.log('oo', this.data.userInfo);
+    //         },
+    //       })
+    //     }
+    //   },
+    // })
+
   },
 
   /**
@@ -159,21 +193,27 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.getSetting({ //页面加载就获取userInfo
-      success: (res) => {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: (res) => {
-              const userInfo = res.userInfo;
-              this.setData({
-                userInfo
-              })
-              console.log(this.data.userInfo);
-            },
-          })
-        }
-      },
-    })
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo
+      })
+    }
+
+    // wx.getSetting({ //页面加载就获取userInfo
+    //   success: (res) => {
+    //     if (!res.authSetting['scope.userInfo']) {
+    //       wx.getUserInfo({
+    //         success: (res) => {
+    //           const userInfo = res.userInfo;
+    //           this.setData({
+    //             userInfo
+    //           })
+    //           console.log(this.data.userInfo);
+    //         },
+    //       })
+    //     }
+    //   },
+    // })
   },
 
   /**

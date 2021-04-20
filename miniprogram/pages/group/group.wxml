@@ -1,2 +1,19 @@
 <!--pages/group/group.wxml-->
-<text>pages/group/group.wxml</text>
+<view class="main">
+  <block wx:for="{{dataList}}" wx:key="index">
+    <view class="itemRoot">
+      <view class="dateRoot">
+        {{item.date}}
+      </view>
+      <view>
+        <text class="desc">{{item.desc}}</text>
+      </view>
+      <view class="imgRoot">
+        <block class="imgList" wx:for="{{item.fileIDs}}" wx:for-item="itemImg" wx:key="index">
+          <image class="img" src='{{itemImg}}' mode='aspectFill' data-img='{{[itemImg,item.fileIDs]}}'
+            bindtap="preView"></image>
+        </block>
+      </view>
+    </view>
+  </block>
+</view>

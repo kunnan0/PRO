@@ -1,6 +1,8 @@
 // pages/diaryGroup/allDiary/allDiary.js
 import idCreator from '../../../utils/idCreator'
 const app = getApp();
+import Diary from '../../../api/diary';
+const diaryService = new Diary();
 Page({
 
   /**
@@ -88,16 +90,39 @@ Page({
     const {
       diaryList
     } = this.data;
+    let list = diaryList.list;
     // console.log(itemid, this.findObj(diaryList, itemid));
-    const index = this.findObj(diaryList, itemid);
+    const index = this.findObj(list, itemid);
     if (index != -1) {
-      diaryList.splice(index, 1);
+      diaryList.list.splice(index, 1);
     }
     this.setData({
       diaryList
     })
+    diaryService.updateDiary({ //传入要删除日志所在的日志本组id以及其在组内的index
+      index,
+      _id: diaryList._id
+    }, 'delete', res => {
+      console.log('delete diary data', res);
+    })
   },
 
+  // 点击进入日志
+  handleClickCard(e) {
+    const {
+      diaryid
+    } = e.currentTarget.dataset;
+    // console.log('card', e, diaryId);
+    const { //获取日志本数据
+      list
+    } = this.data.diaryList;
+    const idx = this.findObj(list, diaryid);
+    console.log('idx', idx);
+    app.globalData.diarySelect = list[idx];
+    wx.navigateTo({
+      url: `/pages/showDiary/showDiary`,
+    })
+  },
 
 
   /**

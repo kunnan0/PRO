@@ -27,15 +27,18 @@
 
   <!-- 日志本组别 -->
   <view class="diaryGroup">
-    <van-cell bind:click="handleSelect" title="{{group?group.groupName:'选择组别'}}"></van-cell>
+    <van-cell bind:click="handleSelect" title="{{group.length!=0?group.groupName:'选择组别'}}"></van-cell>
     <van-dialog use-slot title="选择日志本群组" show="{{ groupShow }}" bind:confirm="confirmGroup">
       <van-cell-group>
-        <van-cell wx:for="{{groupInfo}}" wx:key="id" title="{{item.groupName}}" data-groupid="{{item.id}}"
-          bind:click="selectGroup" center="{{true}}"> </van-cell>
+        <view class="groupSelectBlock" bind:tap="selectGroup" wx:for="{{groupInfo}}" wx:key="_id"
+          data-groupid="{{item._id}}">
+          <van-cell title="{{item.groupName}}"> </van-cell>
+        </view>
       </van-cell-group>
     </van-dialog>
   </view>
 
   <!-- 提交按钮 -->
-  <van-button class="btn" type="primary" block color="linear-gradient(to right, #4bb0ff, #6149D9)">保存</van-button>
+  <van-button class="btn" type="primary" block color="linear-gradient(to right, #4bb0ff, #6149D9)"
+    bind:click="finishDiary">保存</van-button>
 </view>

@@ -12,3 +12,71 @@
 .empty {
   margin-top: 40rpx;
 }
+
+.card {
+  width: 600rpx;
+  height: 200rpx;
+  background-color: white;
+  margin: 30rpx auto;
+  border: 1px solid gray;
+  border-radius: 40rpx 40rpx;
+  box-shadow: rgba(70, 69, 68, 0.712) 10rpx 10rpx;
+  position: relative;
+}
+
+.top {
+  position: absolute;
+  top: 15rpx;
+  left: 15rpx;
+  width: 80%;
+  height: 60%;
+  /* border: springgreen 1px solid; */
+}
+
+.time {
+  padding-top: 8rpx;
+  padding-left: 19rpx;
+}
+
+.delete {
+  position: absolute;
+  right: 64rpx;
+  width: 20rpx;
+  height: 100%;
+}
+
+.delete .buttonDelete {
+  height: 95%;
+  line-height: 63rpx;
+  font-size: 41rpx;
+  text-align: center;
+  background-color: rgba(255, 50, 29, 0.877);
+  width: 58rpx;
+  writing-mode: vertical-rl;
+  border-radius: 20rpx;
+  letter-spacing: 24rpx;
+  color: white;
+}
+
+.bottom {
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 10rpx;
+  left: 15rpx;
+  width: 80%;
+  height: 60%;
+  /* border: tan 2px solid; */
+  padding-top: 81rpx;
+}
+
+.addCard {
+  position: fixed;
+  right: 48rpx;
+  bottom:87rpx;
+  width: 77rpx;
+  height: 77rpx;
+  /* border-radius: 50%;
+  background-color: gray;
+  border: 1px solid gray; */
+}
+

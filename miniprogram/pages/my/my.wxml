@@ -1,17 +1,38 @@
 <!--pages/my/my.wxml-->
 <view class="container">
 
-  <view class='user-wrap'>
+  <!-- <view class='user-wrap'>
 
     <van-image round width="100" height="100" src="{{userInfo.avatarUrl}}" wx:if="{{userInfo}}" />
     <van-image round width="100" height="100"
       src="cloud://clound-5gtvltq351d31b48.636c-clound-5gtvltq351d31b48-1304986325/pageIcon/loginUser.png" wx:else />
-    <button type='primary' class="username-wrap" bind:tap="onGetUserInfo">
-      <text class="username">{{userInfo?userInfo.nickName:'点击登录'}}</text>
-      <!-- <text>登录</text> -->
-    </button>
+    <!-- <button type='primary' class="username-wrap" bind:tap="onGetUserInfo"> -->
+  <!-- <block>
+      <button wx:if="{{canIUseGetUserProfile}}" class="username-wrap" bindtap="getUserProfile">
+        <text class="username">{{userInfo?userInfo.nickName:'点击登录'}}</text> </button>
+      <button wx:else open-type="getUserInfo" class="username-wrap" bindgetuserinfo="getUserInfo">
+        <text class="username">{{userInfo?userInfo.nickName:'点击登录'}}</text> </button>
+    </block> -->
 
+  <!-- <text>登录</text> -->
+  <!-- </button> -->
+
+  <!-- </view> -->
+
+  <view class="userinfo">
+    <block wx:if="{{!hasUserInfo}}">
+      <image bindtap="bindViewTap" class="userinfo-avatar"
+        src="cloud://clound-5gtvltq351d31b48.636c-clound-5gtvltq351d31b48-1304986325/pageIcon/loginUser.png"
+        mode="cover"></image>
+      <button wx:if="{{canIUseProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
+      <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    </block>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
   </view>
+
 
   <van-cell-group>
     <view class="today">

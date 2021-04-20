@@ -12,7 +12,7 @@ const {
 
 // 根据用户id获取数据
 const getUserNotes = (openid) => {
-  return model.findByUserId(NOTES, NOTESFIELD, openid)
+  return model.findByUserId(NOTES, NOTESFIELD, openid,'date')
 }
 
 // 新增随笔

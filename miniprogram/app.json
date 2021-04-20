@@ -1,9 +1,10 @@
 {
   "pages": [
-    
-    
-    
     "pages/my/my",
+    "pages/group/group",
+    "pages/fabu/fabu",
+    
+    "pages/showDiary/showDiary",
     "pages/notice/noticeGroup/noticeGroup",
     "pages/notice/notice",
     "pages/noteGroup/allNote/allNote",
@@ -11,7 +12,7 @@
     "pages/diaryGroup/allDiary/allDiary",
     "pages/likes/likes",
     "pages/diaryGroup/diaryGroup",
-    "pages/group/group",
+
     "pages/diary/diary",
     "pages/miniNote/miniNote",
 

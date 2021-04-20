@@ -1,42 +1,27 @@
-// pages/group/group.js
-let app = getApp();
+// pages/showDiary/showDiary.js
+
+const app = getApp();
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    dataList: [],
+    diaryData: {}, //要展示的日志数据
   },
 
-  // 预览图片
-  preView(e) {
-    let imgData = e.currentTarget.dataset.img;
-    // console.log();
-    wx.previewImage({
-      current: imgData[0],
-      urls: imgData[1],
-    })
-  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that = this;
-    wx.cloud.database().collection('USER')
-      .orderBy('createTime', 'desc') //发布顺序排序
-      .get({
-        success(res) {
-          console.log('success res', res);
-          that.setData({
-            dataList: res.data
-          })
-        },
-        fail(res) {
-          console.log('fail! res', res);
-        }
-      })
+    const { //从全局变量获取相关内容
+      diarySelect
+    } = app.globalData;
+    this.setData({
+      diaryData: diarySelect
+    })
   },
 
   /**

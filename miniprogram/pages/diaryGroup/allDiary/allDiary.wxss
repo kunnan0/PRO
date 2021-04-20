@@ -1,1 +1,20 @@
 /* pages/diaryGroup/allDiary/allDiary.wxss */
+
+.vanCard {
+  margin-top: 15rpx;
+}
+
+.vanTitle {
+  font-weight: bold;
+  font-size: 48rpx;
+}
+
+.vanDesc {
+  font-size: 40rpx;
+}
+
+.company {
+  font-size: 36rpx;
+  color: gray;
+}
+

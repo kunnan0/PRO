@@ -5,6 +5,8 @@
     "van-nav-bar": "/@vant/weapp/dist/nav-bar/index",
     "van-dialog": "/@vant/weapp/dist/dialog/index",
     "van-field": "/@vant/weapp/dist/field/index",
+    "van-progress": "/@vant/weapp/dist/progress/index",
+    "van-icon": "/@vant/weapp/dist/icon/index",
     "van-cell-group": "/@vant/weapp/dist/cell-group/index",
     "van-grid-item": "/@vant/weapp/dist/grid-item/index"
   }

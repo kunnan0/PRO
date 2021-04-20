@@ -3,12 +3,13 @@ import Dialog from '../../@vant/weapp/dist/dialog/dialog';
 import {
   genNonDuplicateID
 } from '../../utils/idCreator';
-import Diary from '../../api/diary'
-const diaryService = new Diary();
-const app = getApp()
 import {
   findObj
 } from '../../utils/idFinder'
+import Diary from '../../api/diary'
+const diaryService = new Diary();
+const app = getApp()
+
 
 Page({
 
@@ -57,6 +58,7 @@ Page({
 
   // 顶部导航栏按钮点击事件
   onClickLeft() { //返回按钮
+    console.log('back!');
     wx.navigateBack({
       delta: 1,
       // success: (res) => {},
@@ -79,7 +81,6 @@ Page({
       diaryid
     } = e.currentTarget.dataset;
     const {
-      showDelete,
       diaryGroup
     } = this.data
     this.setData({
@@ -87,19 +88,19 @@ Page({
     })
     Dialog.confirm({
         title: '确认删除吗？',
-        message: '删除后无法撤回！',
+        message: '删除包括其中所有日志，无法撤回！',
       })
       .then(() => {
         // on confirm
-        diaryGroup.map(item => {
-          if (item.id === diaryid) {
-            diaryGroup.splice(diaryGroup.indexOf(item), 1)
-          }
-        })
+        let idx = findObj(diaryGroup, diaryid, '_id')
+        diaryGroup.splice(idx, 1);
+
         this.setData({
           showDelete: false,
           diaryGroup
         })
+        // 更新到云端
+        diaryService.removeDiaryGroup(diaryid);
       })
       .catch(() => {
         // on cancel
@@ -125,8 +126,7 @@ Page({
     } = this.data;
     if (valueIpt) {
       const newGroup = {
-        id: genNonDuplicateID(),
-        name: valueIpt,
+        groupName: valueIpt,
         list: []
       }
       diaryGroup.push(newGroup);
@@ -134,6 +134,7 @@ Page({
         showIpt: false,
         diaryGroup
       });
+      diaryService.addDiaryGroup(newGroup);
     } else {
       wx.showToast({
         title: '名称不能为空！',
@@ -154,6 +155,7 @@ Page({
     })
   },
 
+
   // 点击进入日志本
   handleClickDiary(e) {
     const {
@@ -165,6 +167,7 @@ Page({
     const idx = findObj(diaryGroup, id, '_id')
     const data = diaryGroup[idx];
     console.log('datago', data, idx);
+    // 将得到的数据传递给全局变量，用于传递到子页面
     app.globalData.diaryData = data;
     app.globalData.diaryGroup = diaryGroup;
     // wx.navigateTo({
@@ -180,8 +183,9 @@ Page({
     //   //   // })
     //   // }
     // })
+
     wx.navigateTo({
-      url: '/pages/diaryGroup/allDiary/allDiary',
+      url: '/pages/diaryGroup/allDiary/allDiary', //url参数不能传递复杂类型
     })
   },
 

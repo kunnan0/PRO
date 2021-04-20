@@ -2,6 +2,13 @@
 import {
   findObj
 } from '../../utils/idFinder'
+import {
+  genNonDuplicateID
+} from '../../utils/idCreator'
+import Diary from '../../api/diary'
+
+const diaryService = new Diary()
+
 Page({
 
   /**
@@ -14,29 +21,82 @@ Page({
     show: false,
     minDate: new Date(2020, 1, 1).getTime(),
     maxDate: new Date().getTime(),
-
+    digest: '', //预览
     company: '', //公司
     msg: '', //正文
     group: '', //存入的日志本组
     groupShow: false, //选择组别弹窗
-    groupInfo: [{ //日志本组数据
-        id: 'qwe1',
-        groupName: 'r1'
+    groupInfo: [ //日志本组数据
+      // { 
+      //   _id: 'qwe1',
+      //   groupName: 'r1'
 
-      },
-      {
-        id: 'ewq2',
-        groupName: 'r2'
+      // },
+      // {
+      //   _id: 'ewq2',
+      //   groupName: 'r2'
 
-      },
-      {
-        id: 'ww3',
-        groupName: 'r3'
+      // },
+      // {
+      //   _id: 'ww3',
+      //   groupName: 'r3'
 
-      }
+      // }
     ],
     diaryData: {}, //日志本数据整合
   },
+
+  // 对数据获取前几个字作为预览digest
+  getDigest(value) {
+    let digest = '';
+    console.log('value', typeof value);
+    if (value && value.length >= 6) { //value不为空，且长度足够
+      value = value.split('');
+      digest = value.splice(0, 5);
+      let sum=''
+      digest.map((item) => {
+        sum += item
+      });
+      sum += '...';
+      return sum;
+    } else if (value) {
+      return value
+    }
+    return '';
+  },
+
+  // 保存提交
+  finishDiary() {
+    const {
+      title,
+      msg,
+      group,
+      company,
+      date
+    } = this.data;
+    const digest = this.getDigest(msg);
+    const id = genNonDuplicateID();
+    const diaryData = {
+      title,
+      company,
+      content: msg,
+      group: group._id,
+      date,
+      id,
+      digest
+    }
+    diaryService.updateDiary(diaryData, 'add', res => {
+      wx.navigateBack({
+        delta: 1,
+        // success: (res) => {},
+        // fail: (res) => {},
+        // complete: (res) => {},
+      })
+    })
+  },
+
+
+
   // 选择日志本组 按钮弹窗
   handleSelect() {
     this.setData({
@@ -51,13 +111,15 @@ Page({
     const {
       groupInfo
     } = this.data;
-    const idx = findObj(groupInfo, groupid); //查找到要找的对象
+    let idx = findObj(groupInfo, groupid, "_id"); //查找到要找的对象
+    // console.log("idx", idx, groupid);
     if (idx != -1) {
       // console.log();
       this.setData({
         group: groupInfo[idx],
         groupShow: false
       })
+      // console.log(this.data.group, groupInfo[idx]);
     }
   },
   // 选择组别弹窗的按钮事件
@@ -92,7 +154,7 @@ Page({
   },
   formatDate(date) { //选中的时间结果
     date = new Date(date);
-    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
   },
   onConfirm(event) { //确认选择
     this.setData({
@@ -100,19 +162,35 @@ Page({
       date: this.formatDate(event.detail),
     });
   },
-
   // 标题输入事件
   inputTitle(e) {
     this.setData({
       title: e.detail
     })
   },
+
   /**
    * 生命周期函数--监听页面加载
    */
 
-  onLoad: function (options) {
+  _init() {
+    diaryService.getUserDiaryAll(res => {
+      const groupDataGet = res.result.data.data;
+      console.log(groupDataGet);
+      const groupInfo = groupDataGet.map(item => {
+        return {
+          _id: item._id,
+          groupName: item.groupName
+        }
+      })
+      this.setData({
+        groupInfo
+      })
+    })
+  },
 
+  onLoad: function (options) {
+    this._init();
   },
 
   /**
@@ -126,7 +204,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this._init();
   },
 
   /**

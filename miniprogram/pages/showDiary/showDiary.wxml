@@ -1,0 +1,19 @@
+<!--pages/showDiary/showDiary.wxml-->
+<view class="main">
+  <view class="head">
+    <view class="title">
+      <text> <text class="titleCotent">标题：</text> {{diaryData.title}}</text>
+    </view>
+    <view class="company">
+      <text>公司/岗位： {{diaryData.company}}</text>
+    </view>
+  </view>
+  <view class="content">
+    <view class="date">
+      <text>日期：{{diaryData.date}}</text>
+    </view>
+    <view class="desc">
+      <text>{{diaryData.content}}</text>
+    </view>
+  </view>
+</view>

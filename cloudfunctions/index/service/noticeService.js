@@ -12,7 +12,7 @@ const {
 
 // 根据id获取全部备忘录组
 const getUserNotice = (openid) => {
-  return model.findByUserId(NOTICE, NOTICEFIELD, openid)
+  return model.findByUserId(NOTICE, NOTICEFIELD, openid, 'deadline', 'asc')
 }
 
 // 新增备忘录组
@@ -37,5 +37,5 @@ module.exports = {
   addNoticeGroup,
   updateNotice,
   removeNoticeGroup,
-  
+
 }

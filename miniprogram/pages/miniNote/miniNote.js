@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    radio: '1', //单选选中的 1为分享2为私人
+    // radio: '1', //单选选中的 1为分享2为私人
     value: '0', //心情评价
     msg: '', //输入框文本
     fileList: [ //上传图片
@@ -25,8 +25,36 @@ Page({
       mind: '',
       radio: '',
       pic: '', //图片
-    }
+    },
+    // 时间参数
+    date: '',
+    show: false,
+    minDate: new Date(2020, 1, 1).getTime(),
+    maxDate: new Date().getTime(),
   },
+  // 设定时间事件
+  onDisplay() { //开启选框
+    this.setData({
+      show: true
+    });
+  },
+  onClose() { //关闭选框
+    this.setData({
+      show: false
+    });
+  },
+  formatDate(date) { //选中的时间结果
+    date = new Date(date);
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  },
+  onConfirm(event) { //确认选择
+    this.setData({
+      show: false,
+      date: this.formatDate(event.detail),
+    });
+  },
+
+
   // 文件上传处理
   afterRead(event) {
     const {
@@ -57,8 +85,11 @@ Page({
   },
 
   // 文本框输入
-  inputText() {
-
+  inputText(event) {
+    const iptData = event.detail;
+    this.setData({
+      msg: iptData
+    })
   },
   // 单选框选中事件
   changePri(e) {
@@ -71,6 +102,36 @@ Page({
     this.setData({
       value: e.detail
     })
+  },
+  // 发布按钮
+  handleFinish() {
+    const {
+      msg,
+      date,
+      value
+    } = this.data;
+    const noteAll = {
+      content: msg,
+      date,
+      mind: value,
+    }
+    noteService.addNewNotes(noteAll, res => {
+      console.log('upload note', res);
+      // wx.navigateTo({
+      //   url: '/pages/my/my',
+      //   // events: events,
+      //   // success: (result) => {},
+      //   // fail: (res) => {},
+      //   // complete: (res) => {},
+      // })
+      wx.navigateBack({
+        delta: 1,
+        success: (res) => {},
+        fail: (res) => {},
+        complete: (res) => {},
+      })
+    })
+
   },
 
   /**

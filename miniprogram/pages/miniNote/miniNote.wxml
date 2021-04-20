@@ -18,14 +18,19 @@
     <view class="mind">
       <van-rate value="{{ value }}" icon="like" void-icon="like-o" bind:change="rateMind" />
     </view>
-    <view class="setPrivacy">
+    <!-- <view class="setPrivacy">
       <van-radio-group value="{{ radio }}" bind:change="changePri">
         <van-radio name="1">公开分享</van-radio>
         <van-radio name="2">尽自己可见 2</van-radio>
       </van-radio-group>
-    </view>
+    </view> -->
+    <van-cell title="记录日期" value="{{ date }}" bind:click="onDisplay" />
+    <van-calendar show="{{ show }}" bind:close="onClose" bind:confirm="onConfirm" show-confirm="{{ false }}"
+      min-date="{{minDate}}" max-date="{{maxDate}}" default-date="{{maxDate}}" color="#52b9f0" />
   </view>
   <!-- 发布按钮 -->
-  <van-button class="btn" type="primary" block color="linear-gradient(to right, #4bb0ff, #6149D9)">发布</van-button>
+  <van-button class="btn" type="primary"
+  bind:click="handleFinish"
+  block color="linear-gradient(to right, #4bb0ff, #6149D9)">发布</van-button>
 
 </view>

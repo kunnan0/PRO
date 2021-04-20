@@ -45,20 +45,48 @@ exports.main = async (event, context) => {
     const { //从前端传入整合的要加入的数据
       data
     } = event.data;
+    // console.log('get add!!!');
     data.userid = getOpenid();
+
     ctx.data = await diaryService.addDiaryGroup(data);
-    // console.log(data, ctx.data);
+    // console.log('diary!!!!!', data, ctx.data);
     ctx.body = await response.success(ctx);
     await next();
   })
   // 3.更新、存储新日志到日志本 删除日志本中的某个日志也用这个方法
   app.router('updateDiary', async (ctx, next) => {
     const { //从前端传入整合的要加入的数据
-      params
+      params,
+      operate,
     } = event.data;
-    params.userid = getOpenid();
-    ctx.data = await diaryService.updateDiary(params);
-    // console.log(params, ctx.data);
+    const openid = getOpenid();
+    let idxToUpdate = '';
+    const groupData = await diaryService.getUserDiaryAll(openid)
+    console.log(groupData);
+
+    if (operate == 'add') { //添加时，params传入的是要加入的新diary数据
+      groupData.data.forEach((item, idx) => {
+        if (item._id == params.group) {
+          item.list.push(params)
+          idxToUpdate = idx;
+          console.log(item);
+        }
+      })
+      ctx.data = await diaryService.updateDiary(groupData.data[idxToUpdate]);
+    } else if (operate == 'delete') { //删除时，传入的是要删除的index和对应日志本组id
+      const {
+        index,
+        _id
+      } = params
+      groupData.data.forEach((item, idx) => {
+        if (item._id == _id) {
+          item.list.splice(index, 1)
+          idxToUpdate = idx;
+          console.log(item);
+        }
+      })
+      ctx.data = await diaryService.updateDiary(groupData.data[idxToUpdate]);
+    }
     ctx.body = await response.success(ctx);
     await next();
   })
